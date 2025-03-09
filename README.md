@@ -3,7 +3,7 @@
 **Route & Miles Daily Log** is a simple tool designed to help delivery drivers track their daily work reports efficiently. The app allows users to input and save their daily route details, including mileage, package returns, and collections.
 
 🔗 **Access the Live App Here:**  
-[👉 Route & Miles Daily Log](https://dirlei12.github.io/route-miles-daily-log/)
+<a href="https://dirlei12.github.io/route-miles-daily-log/" target="_blank">👉 Route & Miles Daily Log</a>
 
 ## 📌 Features:
 

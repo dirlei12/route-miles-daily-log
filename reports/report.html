@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Route & Miles Daily Log</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Route & Miles Daily Log</h1>
+
+      <label for="driver">Driver Name:</label>
+      <input type="text" id="driver" value="Valdirlei" disabled />
+
+      <label for="date">Date:</label>
+      <input type="text" id="date" readonly />
+
+      <label for="route">Route (A1 - A15):</label>
+      <select id="route">
+        <option value="">Select Route</option>
+        <option value="A1">A1</option>
+        <option value="A2">A2</option>
+        <option value="A3">A3</option>
+        <option value="A4">A4</option>
+        <option value="A5">A5</option>
+        <option value="A6">A6</option>
+        <option value="A7">A7</option>
+        <option value="A8">A8</option>
+        <option value="A9">A9</option>
+        <option value="A10">A10</option>
+        <option value="A11">A11</option>
+        <option value="A12">A12</option>
+        <option value="A13">A13</option>
+        <option value="A14">A14</option>
+        <option value="A15">A15</option>
+      </select>
+
+      <label for="startTime">Start Time:</label>
+      <input type="time" id="startTime" value="06:10" />
+
+      <label for="endTime">End Time:</label>
+      <input type="time" id="endTime" />
+
+      <label for="miles">Total Miles:</label>
+      <input type="number" id="miles" placeholder="Enter total miles" />
+
+      <label for="returned">Packages Returned:</label>
+      <input
+        type="number"
+        id="returned"
+        placeholder="Enter returned packages"
+      />
+
+      <label for="collected">Packages Collected:</label>
+      <input
+        type="number"
+        id="collected"
+        placeholder="Enter collected packages"
+      />
+
+      <label for="fileType">Select File Format:</label>
+      <select id="fileType">
+        <option value="txt">TXT (Text File)</option>
+        <option value="csv">CSV (Excel File)</option>
+        <option value="docx">DOCX (Word File)</option>
+      </select>
+
+      <button id="saveReport">Save Report</button>
+      <button onclick="window.location.href='../index.html'">
+        Back to Home
+      </button>
+    </div>
+
+    <script src="report.js"></script>
+  </body>
+</html>

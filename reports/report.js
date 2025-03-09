@@ -23,22 +23,45 @@ document.getElementById("saveReport").addEventListener("click", function () {
   const collected = document.getElementById("collected").value;
   const fileType = document.getElementById("fileType").value;
 
+  const statusMessage = document.getElementById("statusMessage");
+
   // Validate input fields
   if (!route || !startTime || !endTime || !miles || !returned || !collected) {
-    alert("Please fill in all fields before saving.");
+    showMessage("Please fill in all fields before saving.", "error");
     return;
   }
 
   // Format report content
-  const reportContent = `${driver}\nDate: ${date}\nRoute: ${route}\nStart: ${startTime}\nEnd: ${endTime}\nMiles: ${miles}\nRet: ${returned}\nCol: ${collected}`;
+  const reportContent = `Driver: ${driver}\nDate: ${date}\nRoute: ${route}\nStart: ${startTime}\nEnd: ${endTime}\nMiles: ${miles}\nReturned: ${returned}\nCollected: ${collected}`;
 
   // Choose the file format
   if (fileType === "txt") {
     saveAsTextFile(reportContent, date);
-  } else {
-    alert("Only TXT format is supported for now.");
+  } else if (fileType === "csv") {
+    saveAsCSV(
+      date,
+      driver,
+      route,
+      startTime,
+      endTime,
+      miles,
+      returned,
+      collected
+    );
   }
 });
+
+// Function to show success/error messages
+function showMessage(message, type) {
+  const statusMessage = document.getElementById("statusMessage");
+  statusMessage.textContent = message;
+  statusMessage.className = `status-message ${type}`;
+  statusMessage.style.display = "block";
+
+  setTimeout(() => {
+    statusMessage.style.display = "none";
+  }, 3000);
+}
 
 // Function to save the file as TXT
 function saveAsTextFile(content, date) {
@@ -50,5 +73,65 @@ function saveAsTextFile(content, date) {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-  alert("Report saved successfully!");
+  showMessage("Report saved successfully!", "success");
+}
+
+// Function to save the file as CSV
+function saveAsCSV(
+  date,
+  driver,
+  route,
+  startTime,
+  endTime,
+  miles,
+  returned,
+  collected
+) {
+  const csvContent =
+    "Driver,Date,Route,Start Time,End Time,Miles,Returned,Collected\n" +
+    `${driver},${date},${route},${startTime},${endTime},${miles},${returned},${collected}\n`;
+
+  const fileName = `Route_Report_${date.replace(/\//g, "-")}.csv`;
+  const blob = new Blob([csvContent], { type: "text/csv" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  showMessage("CSV report saved successfully!", "success");
+}
+
+function copyToClipboard(content) {
+  navigator.clipboard
+    .writeText(content)
+    .then(() => {
+      showMessage("Report copied! Open Notes and paste it.", "success");
+    })
+    .catch((err) => {
+      showMessage("Failed to copy report.", "error");
+    });
+}
+
+// Alteração na função saveAsTextFile
+function saveAsTextFile(content, date) {
+  copyToClipboard(content); // Copia o conteúdo automaticamente
+}
+
+function shareReport(content) {
+  if (navigator.share) {
+    navigator
+      .share({
+        title: "Route & Miles Daily Log",
+        text: content,
+      })
+      .then(() => {
+        showMessage("Shared successfully!", "success");
+      })
+      .catch(() => {
+        showMessage("Failed to share.", "error");
+      });
+  } else {
+    showMessage("Sharing not supported on this browser.", "error");
+  }
 }

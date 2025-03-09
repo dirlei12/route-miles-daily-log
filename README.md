@@ -1,13 +1,20 @@
-# route-miles-daily-log
+# Route & Miles Daily Log 🚚📋
 
-Route & Miles Daily Log is a simple and efficient tool designed for delivery drivers to record and track their daily route details. The app allows users to input key information, such as the route number, start and end times, total miles driven, returned packages, and collected packages.
+**Route & Miles Daily Log** is a simple tool designed to help delivery drivers track their daily work reports efficiently. The app allows users to input and save their daily route details, including mileage, package returns, and collections.
 
-With a user-friendly interface, the app provides an option to export reports in different formats (.txt, .docx, .csv) for easy sharing and record-keeping.
+🔗 **Access the Live App Here:**  
+[👉 Route & Miles Daily Log](https://dirlei12.github.io/route-miles-daily-log/)
 
-🚀 Key Features:
-✅ Quick entry of daily route details.
-✅ Choose between .txt, .docx, or .csv for report exports.
-✅ Simple and clean UI for fast data input.
-✅ Works on both PC and mobile devices.
+## 📌 Features:
 
-💡 Built to streamline daily reporting for delivery professionals, ensuring accuracy and efficiency in work logs.
+✅ Quick entry for daily route details  
+✅ Saves reports in `.txt`, `.csv`, or `.docx` format  
+✅ Simple and mobile-friendly UI  
+✅ Works on both PC and mobile devices
+
+## 🚀 How to Use:
+
+1. Open the app using the link above.
+2. Enter your **route details** (start time, end time, mileage, etc.).
+3. Select the **file format** you want to save.
+4. Click **"Save Report"** to download the file.

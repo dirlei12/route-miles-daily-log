@@ -1,4 +1,4 @@
-// Set the current date in DD/MM/YYYY format
+// Set the current date in DD/MM/YYYY format when the page loads
 document.addEventListener("DOMContentLoaded", function () {
   const dateField = document.getElementById("date");
   const today = new Date();
@@ -11,17 +11,22 @@ document.addEventListener("DOMContentLoaded", function () {
   dateField.value = formattedDate;
 });
 
-// Button: Save Report to PC
+// 1) Save Report to PC
 document.getElementById("saveToPC").addEventListener("click", function () {
   saveReport(false);
 });
 
-// Button: Save & Copy
+// 2) Save & Copy
 document.getElementById("saveAndCopy").addEventListener("click", function () {
   saveReport(true);
 });
 
-// Main function to save or copy the report
+// 3) Share on iPhone
+document.getElementById("shareReport").addEventListener("click", function () {
+  shareOnIphone();
+});
+
+// Main function to handle "Save to PC" or "Save & Copy"
 function saveReport(copyOnly) {
   const driver = "Valdirlei"; // Fixed name
   const date = document.getElementById("date").value;
@@ -39,16 +44,16 @@ function saveReport(copyOnly) {
     return;
   }
 
-  // Format report content
+  // Build the text content for the report
   const reportContent = `Driver: ${driver}\nDate: ${date}\nRoute: ${route}\nStart: ${startTime}\nEnd: ${endTime}\nMiles: ${miles}\nReturned: ${returned}\nCollected: ${collected}`;
 
-  // If the user clicked "Save & Copy", we copy the report only
+  // If "Save & Copy"
   if (copyOnly) {
     copyToClipboard(reportContent);
     return;
   }
 
-  // Otherwise, we save the file to the PC
+  // If "Save to PC"
   if (fileType === "txt") {
     saveAsTextFile(reportContent, date);
   } else if (fileType === "csv") {
@@ -65,14 +70,52 @@ function saveReport(copyOnly) {
   }
 }
 
-// Copy to Clipboard
+// Function specifically for "Share on iPhone" (navigator.share)
+function shareOnIphone() {
+  const driver = "Valdirlei"; // Could also retrieve from input if needed
+  const date = document.getElementById("date").value;
+  const route = document.getElementById("route").value;
+  const startTime = document.getElementById("startTime").value;
+  const endTime = document.getElementById("endTime").value;
+  const miles = document.getElementById("miles").value;
+  const returned = document.getElementById("returned").value;
+  const collected = document.getElementById("collected").value;
+
+  // Validate input fields
+  if (!route || !startTime || !endTime || !miles || !returned || !collected) {
+    showMessage("Please fill in all fields before sharing.", "error");
+    return;
+  }
+
+  // Build the text content for sharing
+  const reportContent = `Driver: ${driver}\nDate: ${date}\nRoute: ${route}\nStart: ${startTime}\nEnd: ${endTime}\nMiles: ${miles}\nReturned: ${returned}\nCollected: ${collected}`;
+
+  // Attempt to use Web Share API
+  if (navigator.share) {
+    navigator
+      .share({
+        title: "Route & Miles Daily Log",
+        text: reportContent,
+      })
+      .then(() => {
+        showMessage("Report shared successfully!", "success");
+      })
+      .catch(() => {
+        showMessage("Failed to share report.", "error");
+      });
+  } else {
+    showMessage("Sharing not supported on this browser.", "error");
+  }
+}
+
+// Copy text to clipboard
 function copyToClipboard(content) {
   navigator.clipboard
     .writeText(content)
     .then(() => {
       showMessage("Report copied and ready to paste.", "success");
     })
-    .catch((err) => {
+    .catch(() => {
       showMessage("Failed to copy report.", "error");
     });
 }
@@ -116,7 +159,7 @@ function saveAsCSV(
   showMessage("CSV report saved successfully!", "success");
 }
 
-// Status Message Helper
+// Display status messages on screen
 function showMessage(message, type) {
   const statusMessage = document.getElementById("statusMessage");
   statusMessage.textContent = message;

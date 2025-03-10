@@ -1,4 +1,15 @@
-/* General Styles */
+/* 
+  -------------------------------------------
+  1) ESTILOS GERAIS
+  -------------------------------------------
+*/
+
+/* Reset / Base styles if needed */
+* {
+  box-sizing: border-box;
+}
+
+/* Body - centrando conteúdo vertical e horizontalmente */
 body {
   font-family: Arial, sans-serif;
   text-align: center;
@@ -11,7 +22,33 @@ body {
   min-height: 100vh;
 }
 
-/* Main Container (used in index.html) */
+/* Mensagem de status genérica (alertas de sucesso/erro) */
+.status-message {
+  display: none;
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.status-message.success {
+  background-color: #28a745;
+  color: white;
+}
+.status-message.error {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* 
+  -------------------------------------------
+  2) ESTILOS DO INDEX.HTML
+  -------------------------------------------
+*/
+
+/* .container para a página inicial (index.html) */
 .container {
   background: white;
   padding: 20px;
@@ -20,20 +57,18 @@ body {
   width: 300px;
 }
 
-/* Headings (index) */
-h1 {
+/* Título e texto no index.html */
+.container h1 {
   font-size: 22px;
   margin-bottom: 10px;
 }
-
-/* Paragraph (index) */
-p {
+.container p {
   font-size: 16px;
   margin-bottom: 20px;
 }
 
-/* Buttons (index) */
-button {
+/* Botões do index.html */
+.container button {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
@@ -43,48 +78,86 @@ button {
   cursor: pointer;
   transition: 0.3s;
 }
-
-/* First Button (Route & Miles Daily Log) */
-button:first-of-type {
+/* Primeiro botão: Route & Miles Daily Log */
+.container button:first-of-type {
   background-color: #007bff;
   color: white;
 }
-button:first-of-type:hover {
+.container button:first-of-type:hover {
   background-color: #0056b3;
 }
-
-/* Second Button (MilesTrack) */
-button:last-of-type {
+/* Segundo botão: MilesTrack */
+.container button:last-of-type {
   background-color: #28a745;
   color: white;
 }
-button:last-of-type:hover {
+.container button:last-of-type:hover {
   background-color: #218838;
 }
 
-/* -----------------------------------------------------
-   MilesTrack - Additional Styles
------------------------------------------------------ */
+/* 
+  -------------------------------------------
+  3) MILESTRACK.HTML (E PODE TAMBÉM SERVIR 
+     PARA REPORTS SE USAR MESMA ESTRUTURA)
+  -------------------------------------------
+*/
 
-/* Container specific to MilesTrack */
-.milestrack-container {
+/* Container específico do MilesTrack ou Reports */
+.milestrack-container,
+.report-container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 90%;
   max-width: 450px;
   margin: 20px auto;
+  text-align: left; /* para alinhar labels e texto à esquerda, se quiser */
 }
 
-/* Form groups for each label+input */
+/* Título principal */
+.milestrack-container h1,
+.report-container h1 {
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+/* Botão de Dark Mode (opcional) */
+.darkmode-btn {
+  background: #444;
+  color: white;
+  margin-bottom: 20px;
+  width: 100%;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.darkmode-btn:hover {
+  background: #222;
+}
+
+/* Form groups (data, startMiles, endMiles) */
 .form-group {
   margin-bottom: 15px;
-  text-align: left; /* Align labels to the left */
+  text-align: left; /* Alinhar labels à esquerda */
 }
-
 .form-group label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
 
-/* Buttons for MilesTrack */
+/* Botão "Add Day" ou "Add Record" */
 .add-btn {
   background-color: #007bff;
   color: white;
@@ -100,7 +173,50 @@ button:last-of-type:hover {
   background-color: #0056b3;
 }
 
-/* Back to Home button */
+/* Título da tabela */
+.milestrack-container h2,
+.report-container h2 {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Container da tabela - para rolagem horizontal */
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+/* Tabela estilizada */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+.styled-table th,
+.styled-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.styled-table thead {
+  background-color: #007bff;
+  color: white;
+}
+.styled-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.styled-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Sessão de Totais (WeeklyTotals) */
+.totals {
+  text-align: left;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+/* Botão de Voltar */
 .back-btn {
   background-color: #6c757d;
   color: white;
@@ -116,61 +232,7 @@ button:last-of-type:hover {
   background-color: #5a6268;
 }
 
-/* Table container for overflow if needed */
-.table-container {
-  overflow-x: auto; /* Scroll horizontally if table is too wide */
-  margin-bottom: 20px;
-}
-
-/* Styled table */
-.styled-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.styled-table th,
-.styled-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
-}
-
-.styled-table thead {
-  background-color: #007bff;
-  color: white;
-}
-
-.styled-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.styled-table tr:hover {
-  background-color: #f1f1f1;
-}
-
-/* Totals section */
-.totals {
-  text-align: left;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-/* Dark Mode Button (if you keep it) */
-.darkmode-btn {
-  background: #444;
-  color: white;
-  margin-bottom: 20px;
-  width: 100%;
-  border: none;
-  padding: 12px;
-  font-size: 16px;
-  cursor: pointer;
-}
-.darkmode-btn:hover {
-  background: #222;
-}
-
-/* Status Message (already used in the other page) */
+/* Mensagem de status ou alert */
 .status-message {
   display: none;
   margin-top: 15px;
@@ -181,7 +243,7 @@ button:last-of-type:hover {
   text-align: center;
 }
 
-/* Modal (preview) if you still use it */
+/* Modal (preview) - se for usar no report ou milestrack */
 .modal {
   display: none;
   position: fixed;
@@ -217,20 +279,64 @@ button:last-of-type:hover {
   cursor: pointer;
 }
 
-/* Example Dark Mode Override */
-.dark-mode .milestrack-container {
-  background: #1f1f1f;
+/* 
+  -------------------------------------------
+  4) DARK MODE OVERRIDES (Opcional)
+  -------------------------------------------
+*/
+.dark-mode {
+  background-color: #121212;
+  color: white;
 }
-.dark-mode .form-group label,
-.dark-mode .form-group input,
-.dark-mode .table-container,
-.dark-mode .totals {
+
+/* Se as containers forem .milestrack-container ou .report-container */
+.dark-mode .milestrack-container,
+.dark-mode .report-container {
+  background: #1f1f1f;
   color: #fff;
 }
+
+.dark-mode input,
+.dark-mode select,
+.dark-mode button {
+  background: #333;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+/* Ajustando tabela em modo escuro */
 .dark-mode .styled-table thead {
   background-color: #333;
 }
 .dark-mode .styled-table th,
 .dark-mode .styled-table td {
   border-color: #555;
+}
+
+/* 
+  -------------------------------------------
+  5) RESPONSIVE MEDIA QUERIES
+  -------------------------------------------
+*/
+
+/* Telas >= 768px => aumentar container */
+@media (min-width: 768px) {
+  .milestrack-container,
+  .report-container {
+    max-width: 700px;
+  }
+  .container {
+    width: 500px; /* Ex: aumentar no index também */
+  }
+}
+
+/* Telas >= 1024px => aumentar ainda mais */
+@media (min-width: 1024px) {
+  .milestrack-container,
+  .report-container {
+    max-width: 900px;
+  }
+  .container {
+    width: 600px;
+  }
 }

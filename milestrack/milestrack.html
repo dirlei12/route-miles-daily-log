@@ -4,74 +4,41 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MilesTrack</title>
-    <!-- Usando o mesmo styles.css que o index.html -->
     <link rel="stylesheet" href="../styles.css" />
   </head>
   <body>
     <div class="container milestrack-container">
       <h1>MilesTrack</h1>
-
-      <!-- Se quiser manter o Dark Mode -->
       <button id="toggleDarkMode" class="darkmode-btn">Dark Mode</button>
 
       <div class="form-group">
-        <label for="date">Date:</label>
-        <input type="date" id="date" />
+        <label for="dateInput">Date:</label>
+        <input type="date" id="dateInput" required />
       </div>
 
       <div class="form-group">
-        <label for="startMiles">Start Miles:</label>
-        <input type="number" id="startMiles" placeholder="Enter start miles" />
+        <label for="startMilesInput">Start Miles:</label>
+        <input
+          type="number"
+          id="startMilesInput"
+          placeholder="Enter start miles"
+          required
+        />
       </div>
 
       <div class="form-group">
-        <label for="endMiles">End Miles:</label>
-        <input type="number" id="endMiles" placeholder="Enter end miles" />
+        <label for="endMilesInput">End Miles:</label>
+        <input
+          type="number"
+          id="endMilesInput"
+          placeholder="Enter end miles"
+          required
+        />
       </div>
 
-      <button id="addDay" class="add-btn">Add Day</button>
-
-      <h2>Daily Records</h2>
-      <div class="table-container">
-        <table id="recordsTable" class="styled-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Start Miles</th>
-              <th>End Miles</th>
-              <th>Total Miles</th>
-              <th>Payment (0.205/mi)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Dynamically filled by JS -->
-          </tbody>
-        </table>
-      </div>
-
-      <div id="weeklyTotals" class="totals">
-        <strong>Total Miles This Week:</strong>
-        <span id="totalMilesWeek">0</span><br />
-        <strong>Total Payment This Week:</strong> £<span id="totalPaymentWeek"
-          >0.00</span
-        >
-      </div>
-
-      <button onclick="window.location.href='../index.html'" class="back-btn">
-        Back to Home
-      </button>
-
-      <div id="statusMessage" class="status-message"></div>
+      <button id="saveReportToExcel" class="add-btn">Save to Excel</button>
     </div>
 
-    <div id="previewModal" class="modal">
-      <div class="modal-content">
-        <span id="closePreview" class="close">&times;</span>
-        <pre id="previewText"></pre>
-      </div>
-    </div>
-
-    <!-- milestrack.js (lógica) -->
-    <script src="milestrack.js"></script>
+    <script src="integration.js"></script>
   </body>
 </html>

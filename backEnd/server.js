@@ -8,14 +8,27 @@ const { handleDailyRecord } = require("./excelManager");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Habilita CORS para requisições de outros domínios/portas, se necessário
 app.use(cors());
-// Para interpretar JSON no corpo das requisições
 app.use(express.json());
+
+// Lê o caminho da pasta configurada em config.json (na raiz do projeto)
+// Supondo que o config.json esteja na raiz do projeto ROUTE‑MILES‑DAILY‑LOG
+const configPath = path.join(__dirname, "..", "config.json");
+let excelFolder;
+if (fs.existsSync(configPath)) {
+  const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
+  excelFolder = config.excelFolder;
+} else {
+  // Se não existir, use um caminho padrão (por exemplo, backend/excels)
+  excelFolder = path.join(__dirname, "excels");
+  if (!fs.existsSync(excelFolder)) {
+    fs.mkdirSync(excelFolder, { recursive: true });
+  }
+  console.log(`Using default folder: ${excelFolder}`);
+}
 
 app.post("/api/save-record", (req, res) => {
   const record = req.body;
-  // Validação básica: campos obrigatórios
   if (
     !record.date ||
     record.startMiles === undefined ||
@@ -26,15 +39,7 @@ app.post("/api/save-record", (req, res) => {
       .json({ error: "Missing required fields (date, startMiles, endMiles)." });
   }
   try {
-    // Define a pasta onde os arquivos Excel serão salvos (backend/excels)
-    const baseDir = path.join(__dirname, "excels");
-    // Verifica se a pasta existe; se não, cria
-    if (!fs.existsSync(baseDir)) {
-      fs.mkdirSync(baseDir, { recursive: true });
-      console.log(`Created folder: ${baseDir}`);
-    }
-
-    handleDailyRecord(baseDir, record);
+    handleDailyRecord(excelFolder, record);
     res.json({ message: "Record saved successfully." });
   } catch (error) {
     console.error(error);

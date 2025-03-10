@@ -2,19 +2,20 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
+const fs = require("fs");
 const { handleDailyRecord } = require("./excelManager");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Habilita CORS para requisições de outros domínios/portas
+// Habilita CORS para requisições de outros domínios/portas, se necessário
 app.use(cors());
-// Permite que o Express interprete JSON no corpo das requisições
+// Para interpretar JSON no corpo das requisições
 app.use(express.json());
 
 app.post("/api/save-record", (req, res) => {
   const record = req.body;
-  // Validação básica: os campos obrigatórios são date, startMiles e endMiles
+  // Validação básica: campos obrigatórios
   if (
     !record.date ||
     record.startMiles === undefined ||
@@ -27,6 +28,12 @@ app.post("/api/save-record", (req, res) => {
   try {
     // Define a pasta onde os arquivos Excel serão salvos (backend/excels)
     const baseDir = path.join(__dirname, "excels");
+    // Verifica se a pasta existe; se não, cria
+    if (!fs.existsSync(baseDir)) {
+      fs.mkdirSync(baseDir, { recursive: true });
+      console.log(`Created folder: ${baseDir}`);
+    }
+
     handleDailyRecord(baseDir, record);
     res.json({ message: "Record saved successfully." });
   } catch (error) {

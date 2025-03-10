@@ -4,7 +4,6 @@ document
   .addEventListener("click", async function (e) {
     e.preventDefault();
 
-    // Coleta os valores dos inputs
     const date = document.getElementById("dateInput").value;
     const startMiles = parseFloat(
       document.getElementById("startMilesInput").value
@@ -18,11 +17,9 @@ document
       return;
     }
 
-    // Cria o objeto registro; o back-end calculará totalMiles e payment
     const record = { date, startMiles, endMiles };
 
     try {
-      // Ajuste a URL se necessário. Se estiver no mesmo domínio, pode usar "/api/save-record"
       const response = await fetch("http://localhost:3000/api/save-record", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

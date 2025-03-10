@@ -115,7 +115,7 @@ function insertDailyData(workbook, sheetName, record) {
     data.push(makeDataRow(record));
   }
 
-  // 5) Calcula os totais (somente das linhas de dados, começando do índice 1)
+  // 5) Calcula os totais (somente das linhas de dados, a partir do índice 1)
   let sumMiles = 0;
   let sumPayment = 0;
   for (let i = 1; i < data.length; i++) {

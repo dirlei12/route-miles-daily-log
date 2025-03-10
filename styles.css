@@ -1,28 +1,89 @@
 /* 
-  -------------------------------------------
-  1) ESTILOS GERAIS
-  -------------------------------------------
+  ===========================================
+  1) RESET / BASE STYLES
+  ===========================================
 */
 
-/* Reset / Base styles if needed */
 * {
   box-sizing: border-box;
 }
 
-/* Body - centrando conteúdo vertical e horizontalmente */
+/* 
+  ===========================================
+  2) BODY
+  ===========================================
+*/
+
 body {
   font-family: Arial, sans-serif;
   text-align: center;
   background-color: #f4f4f4;
   margin: 0;
   padding: 0;
+
+  /* Centraliza vertical/horizontalmente */
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
 }
 
-/* Mensagem de status genérica (alertas de sucesso/erro) */
+/* 
+  ===========================================
+  3) CONTAINER E ELEMENTOS GERAIS
+  ===========================================
+*/
+
+/* Container genérico (usado no index.html e em reports/milestrack) */
+.container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  /* Mais flexível do que width: 300px */
+  width: 90%;
+  max-width: 400px;
+  margin: 0 auto; /* se precisar centralizar horizontalmente */
+}
+
+/* Títulos e textos gerais */
+h1 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+/* Labels (ex: no report, milestrack) */
+label {
+  display: block;
+  text-align: left;
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+/* Inputs & Selects (ex: report, milestrack) */
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+input[disabled] {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+/* 
+  ===========================================
+  4) STATUS MESSAGE (ALERTAS)
+  ===========================================
+*/
+
 .status-message {
   display: none;
   margin-top: 15px;
@@ -43,21 +104,13 @@ body {
 }
 
 /* 
-  -------------------------------------------
-  2) ESTILOS DO INDEX.HTML
-  -------------------------------------------
+  ===========================================
+  5) ESTILOS ESPECÍFICOS DO INDEX.HTML
+  ===========================================
 */
 
-/* .container para a página inicial (index.html) */
-.container {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 300px;
-}
-
-/* Título e texto no index.html */
+/* .container do index.html (opcionalmente, 
+   você pode deixar se quiser comportamentos diferentes) */
 .container h1 {
   font-size: 22px;
   margin-bottom: 10px;
@@ -66,8 +119,6 @@ body {
   font-size: 16px;
   margin-bottom: 20px;
 }
-
-/* Botões do index.html */
 .container button {
   width: 100%;
   padding: 10px;
@@ -78,7 +129,7 @@ body {
   cursor: pointer;
   transition: 0.3s;
 }
-/* Primeiro botão: Route & Miles Daily Log */
+/* Primeiro botão (ex: Route & Miles Daily Log) */
 .container button:first-of-type {
   background-color: #007bff;
   color: white;
@@ -86,7 +137,7 @@ body {
 .container button:first-of-type:hover {
   background-color: #0056b3;
 }
-/* Segundo botão: MilesTrack */
+/* Segundo botão (ex: MilesTrack) */
 .container button:last-of-type {
   background-color: #28a745;
   color: white;
@@ -96,10 +147,9 @@ body {
 }
 
 /* 
-  -------------------------------------------
-  3) MILESTRACK.HTML (E PODE TAMBÉM SERVIR 
-     PARA REPORTS SE USAR MESMA ESTRUTURA)
-  -------------------------------------------
+  ===========================================
+  6) MILESTRACK / REPORTS CONTAINERS
+  ===========================================
 */
 
 /* Container específico do MilesTrack ou Reports */
@@ -112,15 +162,68 @@ body {
   width: 90%;
   max-width: 450px;
   margin: 20px auto;
-  text-align: left; /* para alinhar labels e texto à esquerda, se quiser */
+  text-align: left; /* para alinhar labels e texto à esquerda */
 }
 
-/* Título principal */
+/* Título principal (MilesTrack ou Reports) */
 .milestrack-container h1,
 .report-container h1 {
   text-align: center;
   font-size: 22px;
   margin-bottom: 20px;
+}
+
+/* 
+  ===========================================
+  7) FORM-GROUP E INPUTS (MilesTrack / Reports)
+  ===========================================
+*/
+
+/* Exemplo: se usar .form-group no milestrack */
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+/* 
+  ===========================================
+  8) BOTÕES GERAIS
+  ===========================================
+*/
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+/* Botão "Add Day" ou "Add Record" (MilesTrack) */
+.add-btn {
+  background-color: #007bff;
+  color: white;
+  margin-bottom: 20px;
+}
+.add-btn:hover {
+  background-color: #0056b3;
 }
 
 /* Botão de Dark Mode (opcional) */
@@ -138,55 +241,63 @@ body {
   background: #222;
 }
 
-/* Form groups (data, startMiles, endMiles) */
-.form-group {
-  margin-bottom: 15px;
-  text-align: left; /* Alinhar labels à esquerda */
-}
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-.form-group input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
-
-/* Botão "Add Day" ou "Add Record" */
-.add-btn {
-  background-color: #007bff;
+/* Botão de Voltar (ex: milestrack, reports) */
+.back-btn {
+  background-color: #6c757d;
   color: white;
-  width: 100%;
   padding: 12px;
-  margin-bottom: 20px;
+  width: 100%;
+  margin-top: 20px;
   border-radius: 5px;
   border: none;
   font-size: 16px;
   cursor: pointer;
 }
-.add-btn:hover {
-  background-color: #0056b3;
+.back-btn:hover {
+  background-color: #5a6268;
 }
 
-/* Título da tabela */
-.milestrack-container h2,
-.report-container h2 {
-  margin-top: 20px;
-  text-align: center;
+/* Exemplos de IDs usados no Reports (você pode ajustá-los) */
+#saveToPC {
+  background: #007bff;
+  color: white;
+}
+#saveToPC:hover {
+  background: #0056b3;
+}
+#saveAndCopy {
+  background: #28a745;
+  color: white;
+}
+#saveAndCopy:hover {
+  background: #218838;
+}
+#shareReport {
+  background: #6c757d;
+  color: white;
+}
+#shareReport:hover {
+  background: #5a6268;
+}
+#previewReport {
+  background: #17a2b8;
+  color: white;
+}
+#previewReport:hover {
+  background: #138496;
 }
 
-/* Container da tabela - para rolagem horizontal */
+/* 
+  ===========================================
+  9) TABELA (MilesTrack, se necessário)
+  ===========================================
+*/
+
 .table-container {
   overflow-x: auto;
   margin-bottom: 20px;
 }
 
-/* Tabela estilizada */
 .styled-table {
   width: 100%;
   border-collapse: collapse;
@@ -216,34 +327,12 @@ body {
   font-size: 16px;
 }
 
-/* Botão de Voltar */
-.back-btn {
-  background-color: #6c757d;
-  color: white;
-  padding: 12px;
-  width: 100%;
-  margin-top: 20px;
-  border-radius: 5px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-}
-.back-btn:hover {
-  background-color: #5a6268;
-}
+/* 
+  ===========================================
+  10) MODAL (PREVIEW) 
+  ===========================================
+*/
 
-/* Mensagem de status ou alert */
-.status-message {
-  display: none;
-  margin-top: 15px;
-  padding: 10px;
-  border-radius: 5px;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: center;
-}
-
-/* Modal (preview) - se for usar no report ou milestrack */
 .modal {
   display: none;
   position: fixed;
@@ -255,6 +344,7 @@ body {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.5);
 }
+
 .modal-content {
   background-color: #fff;
   margin: 10% auto;
@@ -264,11 +354,13 @@ body {
   border-radius: 5px;
   position: relative;
 }
+
 .modal-content pre {
   text-align: left;
   white-space: pre-wrap;
   word-wrap: break-word;
 }
+
 .close {
   position: absolute;
   top: 10px;
@@ -280,18 +372,19 @@ body {
 }
 
 /* 
-  -------------------------------------------
-  4) DARK MODE OVERRIDES (Opcional)
-  -------------------------------------------
+  ===========================================
+  11) DARK MODE
+  ===========================================
 */
+
 .dark-mode {
   background-color: #121212;
   color: white;
 }
 
-/* Se as containers forem .milestrack-container ou .report-container */
 .dark-mode .milestrack-container,
-.dark-mode .report-container {
+.dark-mode .report-container,
+.dark-mode .container {
   background: #1f1f1f;
   color: #fff;
 }
@@ -313,30 +406,60 @@ body {
   border-color: #555;
 }
 
+/* Dark mode para modal preview */
+.dark-mode .modal-content {
+  background-color: #333;
+  color: #fff;
+}
+.dark-mode .modal-content .close {
+  color: #fff;
+}
+.dark-mode .modal-content pre {
+  color: #fff;
+  background-color: transparent;
+}
+
 /* 
-  -------------------------------------------
-  5) RESPONSIVE MEDIA QUERIES
-  -------------------------------------------
+  ===========================================
+  12) RESPONSIVE MEDIA QUERIES
+  ===========================================
 */
 
-/* Telas >= 768px => aumentar container */
+/* Telas >= 768px => aumentar container (index, milestrack, reports) */
 @media (min-width: 768px) {
   .milestrack-container,
-  .report-container {
-    max-width: 700px;
-  }
+  .report-container,
   .container {
-    width: 500px; /* Ex: aumentar no index também */
+    max-width: 700px;
   }
 }
 
 /* Telas >= 1024px => aumentar ainda mais */
 @media (min-width: 1024px) {
   .milestrack-container,
-  .report-container {
+  .report-container,
+  .container {
     max-width: 900px;
   }
+}
+
+/* Telas <= 480px => estilos mais compactos */
+@media (max-width: 480px) {
   .container {
-    width: 600px;
+    width: 95%;
+    padding: 15px;
+  }
+  label {
+    font-size: 14px;
+  }
+  input,
+  select,
+  button {
+    font-size: 14px;
+    padding: 10px;
+  }
+  .modal-content {
+    width: 90%;
+    margin: 30% auto;
   }
 }

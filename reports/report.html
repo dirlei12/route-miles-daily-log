@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Route & Miles Daily Log</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="..//styles.css" />
   </head>
   <body>
     <div class="container">
@@ -14,7 +14,8 @@
       <button id="toggleDarkMode">Dark Mode</button>
 
       <label for="driver">Driver Name:</label>
-      <input type="text" id="driver" value="Valdirlei" disabled />
+      <!-- Removemos 'disabled' para permitir a edição -->
+      <input type="text" id="driver" value="Valdirlei" />
 
       <label for="date">Date:</label>
       <input type="text" id="date" readonly />
@@ -49,16 +50,20 @@
       <input type="number" id="miles" placeholder="Enter total miles" />
 
       <label for="returned">Packages Returned:</label>
+      <!-- Valor padrão 0 -->
       <input
         type="number"
         id="returned"
+        value="0"
         placeholder="Enter returned packages"
       />
 
       <label for="collected">Packages Collected:</label>
+      <!-- Valor padrão 0 -->
       <input
         type="number"
         id="collected"
+        value="0"
         placeholder="Enter collected packages"
       />
 
@@ -68,7 +73,7 @@
         <option value="csv">CSV (Excel File)</option>
       </select>
 
-      <!-- Buttons for different actions -->
+      <!-- Botões para diferentes ações -->
       <button id="saveToPC">Save Report to PC</button>
       <button id="saveAndCopy">Save & Copy</button>
       <button id="shareReport">Share on iPhone</button>

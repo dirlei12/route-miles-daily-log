@@ -1,4 +1,6 @@
-// Set current date (DD/MM/YYYY) on page load
+// report.js
+
+// Define a data atual no formato DD/MM/YYYY ao carregar a página
 document.addEventListener("DOMContentLoaded", function () {
   const dateField = document.getElementById("date");
   const today = new Date();
@@ -11,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   dateField.value = formattedDate;
 });
 
-// Dark Mode Toggle (optional)
+// Dark Mode Toggle (opcional)
 const darkModeBtn = document.getElementById("toggleDarkMode");
 if (darkModeBtn) {
   darkModeBtn.addEventListener("click", function () {
@@ -29,7 +31,7 @@ function updateDarkModeButton() {
   }
 }
 
-// Buttons
+// Eventos dos botões
 document.getElementById("saveToPC").addEventListener("click", function () {
   saveReport(false);
 });
@@ -51,25 +53,23 @@ document.getElementById("closePreview").addEventListener("click", function () {
   modal.style.display = "none";
 });
 
-// Main function to handle "Save to PC" or "Save & Copy"
+// Função principal para salvar o relatório (ou salvar e copiar)
 function saveReport(copyOnly) {
   const content = buildReportContent();
-  if (!content) return; // Means some field was empty
+  if (!content) return;
 
   const fileType = document.getElementById("fileType").value;
 
-  // If "Save & Copy"
   if (copyOnly) {
     copyToClipboard(content);
     return;
   }
 
-  // If "Save to PC"
   const date = document.getElementById("date").value;
   if (fileType === "txt") {
     saveAsTextFile(content, date);
   } else if (fileType === "csv") {
-    const driver = "Valdirlei";
+    const driver = document.getElementById("driver").value;
     const route = document.getElementById("route").value;
     const startTime = document.getElementById("startTime").value;
     const endTime = document.getElementById("endTime").value;
@@ -89,7 +89,7 @@ function saveReport(copyOnly) {
   }
 }
 
-// "Share on iPhone"
+// Função para compartilhar relatório no iPhone
 function shareOnIphone() {
   const content = buildReportContent();
   if (!content) return;
@@ -111,9 +111,10 @@ function shareOnIphone() {
   }
 }
 
-// Build the text content for the report (used by multiple functions)
+// Função que constrói o conteúdo do relatório
 function buildReportContent() {
-  const driver = "Valdirlei"; // Could also read from input if needed
+  // Agora lemos o driver de um input editável
+  const driver = document.getElementById("driver").value;
   const date = document.getElementById("date").value;
   const route = document.getElementById("route").value;
   const startTime = document.getElementById("startTime").value;
@@ -122,30 +123,34 @@ function buildReportContent() {
   const returned = document.getElementById("returned").value;
   const collected = document.getElementById("collected").value;
 
-  // Validate input fields
-  if (!route || !startTime || !endTime || !miles || !returned || !collected) {
+  // Validação: verifica se os campos obrigatórios estão preenchidos
+  if (
+    !route ||
+    !startTime ||
+    !endTime ||
+    !miles ||
+    returned === "" ||
+    collected === ""
+  ) {
     showMessage("Please fill in all fields first.", "error");
     return false;
   }
 
   const reportContent = `Driver: ${driver}\nDate: ${date}\nRoute: ${route}\nStart: ${startTime}\nEnd: ${endTime}\nMiles: ${miles}\nReturned: ${returned}\nCollected: ${collected}`;
-
   return reportContent;
 }
 
-// Show preview in modal
+// Exibe o conteúdo do relatório em um modal de preview
 function showPreview() {
   const content = buildReportContent();
   if (!content) return;
-
   const previewText = document.getElementById("previewText");
   const modal = document.getElementById("previewModal");
-
   previewText.textContent = content;
   modal.style.display = "block";
 }
 
-// Copy text to clipboard
+// Copia o conteúdo do relatório para a área de transferência
 function copyToClipboard(content) {
   navigator.clipboard
     .writeText(content)
@@ -157,7 +162,7 @@ function copyToClipboard(content) {
     });
 }
 
-// Save as TXT
+// Salva o relatório como arquivo TXT
 function saveAsTextFile(content, date) {
   const fileName = `Route_Report_${date.replace(/\//g, "-")}.txt`;
   const blob = new Blob([content], { type: "text/plain" });
@@ -170,7 +175,7 @@ function saveAsTextFile(content, date) {
   showMessage("Report saved successfully!", "success");
 }
 
-// Save as CSV
+// Salva o relatório como arquivo CSV
 function saveAsCSV(
   date,
   driver,
@@ -184,7 +189,6 @@ function saveAsCSV(
   const csvContent =
     "Driver,Date,Route,Start Time,End Time,Miles,Returned,Collected\n" +
     `${driver},${date},${route},${startTime},${endTime},${miles},${returned},${collected}\n`;
-
   const fileName = `Route_Report_${date.replace(/\//g, "-")}.csv`;
   const blob = new Blob([csvContent], { type: "text/csv" });
   const link = document.createElement("a");
@@ -196,7 +200,7 @@ function saveAsCSV(
   showMessage("CSV report saved successfully!", "success");
 }
 
-// Display status messages on screen
+// Exibe mensagens de status (sucesso/erro)
 function showMessage(message, type) {
   const statusMessage = document.getElementById("statusMessage");
   statusMessage.textContent = message;

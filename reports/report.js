@@ -1,4 +1,4 @@
-// Set the current date in DD/MM/YYYY format when the page loads
+// Set current date (DD/MM/YYYY) on page load
 document.addEventListener("DOMContentLoaded", function () {
   const dateField = document.getElementById("date");
   const today = new Date();
@@ -11,52 +11,71 @@ document.addEventListener("DOMContentLoaded", function () {
   dateField.value = formattedDate;
 });
 
-// 1) Save Report to PC
+// Dark Mode Toggle (optional)
+const darkModeBtn = document.getElementById("toggleDarkMode");
+if (darkModeBtn) {
+  darkModeBtn.addEventListener("click", function () {
+    document.body.classList.toggle("dark-mode");
+    updateDarkModeButton();
+  });
+}
+
+function updateDarkModeButton() {
+  const btn = document.getElementById("toggleDarkMode");
+  if (document.body.classList.contains("dark-mode")) {
+    btn.textContent = "Light Mode";
+  } else {
+    btn.textContent = "Dark Mode";
+  }
+}
+
+// Buttons
 document.getElementById("saveToPC").addEventListener("click", function () {
   saveReport(false);
 });
 
-// 2) Save & Copy
 document.getElementById("saveAndCopy").addEventListener("click", function () {
   saveReport(true);
 });
 
-// 3) Share on iPhone
 document.getElementById("shareReport").addEventListener("click", function () {
   shareOnIphone();
 });
 
+document.getElementById("previewReport").addEventListener("click", function () {
+  showPreview();
+});
+
+document.getElementById("closePreview").addEventListener("click", function () {
+  const modal = document.getElementById("previewModal");
+  modal.style.display = "none";
+});
+
 // Main function to handle "Save to PC" or "Save & Copy"
 function saveReport(copyOnly) {
-  const driver = "Valdirlei"; // Fixed name
-  const date = document.getElementById("date").value;
-  const route = document.getElementById("route").value;
-  const startTime = document.getElementById("startTime").value;
-  const endTime = document.getElementById("endTime").value;
-  const miles = document.getElementById("miles").value;
-  const returned = document.getElementById("returned").value;
-  const collected = document.getElementById("collected").value;
+  const content = buildReportContent();
+  if (!content) return; // Means some field was empty
+
   const fileType = document.getElementById("fileType").value;
-
-  // Validate input fields
-  if (!route || !startTime || !endTime || !miles || !returned || !collected) {
-    showMessage("Please fill in all fields before saving.", "error");
-    return;
-  }
-
-  // Build the text content for the report
-  const reportContent = `Driver: ${driver}\nDate: ${date}\nRoute: ${route}\nStart: ${startTime}\nEnd: ${endTime}\nMiles: ${miles}\nReturned: ${returned}\nCollected: ${collected}`;
 
   // If "Save & Copy"
   if (copyOnly) {
-    copyToClipboard(reportContent);
+    copyToClipboard(content);
     return;
   }
 
   // If "Save to PC"
+  const date = document.getElementById("date").value;
   if (fileType === "txt") {
-    saveAsTextFile(reportContent, date);
+    saveAsTextFile(content, date);
   } else if (fileType === "csv") {
+    const driver = "Valdirlei";
+    const route = document.getElementById("route").value;
+    const startTime = document.getElementById("startTime").value;
+    const endTime = document.getElementById("endTime").value;
+    const miles = document.getElementById("miles").value;
+    const returned = document.getElementById("returned").value;
+    const collected = document.getElementById("collected").value;
     saveAsCSV(
       date,
       driver,
@@ -70,32 +89,16 @@ function saveReport(copyOnly) {
   }
 }
 
-// Function specifically for "Share on iPhone" (navigator.share)
+// "Share on iPhone"
 function shareOnIphone() {
-  const driver = "Valdirlei"; // Could also retrieve from input if needed
-  const date = document.getElementById("date").value;
-  const route = document.getElementById("route").value;
-  const startTime = document.getElementById("startTime").value;
-  const endTime = document.getElementById("endTime").value;
-  const miles = document.getElementById("miles").value;
-  const returned = document.getElementById("returned").value;
-  const collected = document.getElementById("collected").value;
+  const content = buildReportContent();
+  if (!content) return;
 
-  // Validate input fields
-  if (!route || !startTime || !endTime || !miles || !returned || !collected) {
-    showMessage("Please fill in all fields before sharing.", "error");
-    return;
-  }
-
-  // Build the text content for sharing
-  const reportContent = `Driver: ${driver}\nDate: ${date}\nRoute: ${route}\nStart: ${startTime}\nEnd: ${endTime}\nMiles: ${miles}\nReturned: ${returned}\nCollected: ${collected}`;
-
-  // Attempt to use Web Share API
   if (navigator.share) {
     navigator
       .share({
         title: "Route & Miles Daily Log",
-        text: reportContent,
+        text: content,
       })
       .then(() => {
         showMessage("Report shared successfully!", "success");
@@ -106,6 +109,40 @@ function shareOnIphone() {
   } else {
     showMessage("Sharing not supported on this browser.", "error");
   }
+}
+
+// Build the text content for the report (used by multiple functions)
+function buildReportContent() {
+  const driver = "Valdirlei"; // Could also read from input if needed
+  const date = document.getElementById("date").value;
+  const route = document.getElementById("route").value;
+  const startTime = document.getElementById("startTime").value;
+  const endTime = document.getElementById("endTime").value;
+  const miles = document.getElementById("miles").value;
+  const returned = document.getElementById("returned").value;
+  const collected = document.getElementById("collected").value;
+
+  // Validate input fields
+  if (!route || !startTime || !endTime || !miles || !returned || !collected) {
+    showMessage("Please fill in all fields first.", "error");
+    return false;
+  }
+
+  const reportContent = `Driver: ${driver}\nDate: ${date}\nRoute: ${route}\nStart: ${startTime}\nEnd: ${endTime}\nMiles: ${miles}\nReturned: ${returned}\nCollected: ${collected}`;
+
+  return reportContent;
+}
+
+// Show preview in modal
+function showPreview() {
+  const content = buildReportContent();
+  if (!content) return;
+
+  const previewText = document.getElementById("previewText");
+  const modal = document.getElementById("previewModal");
+
+  previewText.textContent = content;
+  modal.style.display = "block";
 }
 
 // Copy text to clipboard

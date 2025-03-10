@@ -10,8 +10,11 @@
     <div class="container">
       <h1>Route & Miles Daily Log</h1>
 
+      <!-- Optional: Dark Mode Toggle if you want -->
+      <button id="toggleDarkMode">Dark Mode</button>
+
       <label for="driver">Driver Name:</label>
-      <input type="text" id="driver" value="Valdirlei" />
+      <input type="text" id="driver" value="Valdirlei" disabled />
 
       <label for="date">Date:</label>
       <input type="text" id="date" readonly />
@@ -50,7 +53,6 @@
         type="number"
         id="returned"
         placeholder="Enter returned packages"
-        value="0"
       />
 
       <label for="collected">Packages Collected:</label>
@@ -58,7 +60,6 @@
         type="number"
         id="collected"
         placeholder="Enter collected packages"
-        value="0"
       />
 
       <label for="fileType">Select File Format:</label>
@@ -67,17 +68,27 @@
         <option value="csv">CSV (Excel File)</option>
       </select>
 
-      <!-- Three different actions -->
+      <!-- Buttons for different actions -->
       <button id="saveToPC">Save Report to PC</button>
       <button id="saveAndCopy">Save & Copy</button>
       <button id="shareReport">Share on iPhone</button>
+      <button id="previewReport">Preview</button>
 
+      <!-- Back to Home -->
       <button onclick="window.location.href='../index.html'">
         Back to Home
       </button>
 
       <!-- Status Message -->
       <div id="statusMessage" class="status-message"></div>
+    </div>
+
+    <!-- Modal for Preview -->
+    <div id="previewModal" class="modal">
+      <div class="modal-content">
+        <span id="closePreview" class="close">&times;</span>
+        <pre id="previewText"></pre>
+      </div>
     </div>
 
     <script src="report.js"></script>

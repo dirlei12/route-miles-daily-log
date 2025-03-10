@@ -8,10 +8,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
-/* Main Container */
+/* Main Container (used in index.html) */
 .container {
   background: white;
   padding: 20px;
@@ -20,19 +20,19 @@ body {
   width: 300px;
 }
 
-/* Headings */
+/* Headings (index) */
 h1 {
   font-size: 22px;
   margin-bottom: 10px;
 }
 
-/* Paragraph */
+/* Paragraph (index) */
 p {
   font-size: 16px;
   margin-bottom: 20px;
 }
 
-/* Buttons */
+/* Buttons (index) */
 button {
   width: 100%;
   padding: 10px;
@@ -49,7 +49,6 @@ button:first-of-type {
   background-color: #007bff;
   color: white;
 }
-
 button:first-of-type:hover {
   background-color: #0056b3;
 }
@@ -59,7 +58,6 @@ button:last-of-type {
   background-color: #28a745;
   color: white;
 }
-
 button:last-of-type:hover {
   background-color: #218838;
 }

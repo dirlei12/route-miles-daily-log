@@ -8,7 +8,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 /* Main Container */
@@ -47,7 +47,6 @@ select {
   font-size: 16px;
 }
 
-/* Disabled input styling */
 input[disabled] {
   background-color: #e9ecef;
   cursor: not-allowed;
@@ -66,24 +65,158 @@ button {
   transition: 0.3s;
 }
 
-/* Primary Button */
-button#saveReport {
+/* Example: customizing each button */
+#saveToPC {
   background: #007bff;
   color: white;
 }
-
-button#saveReport:hover {
+#saveToPC:hover {
   background: #0056b3;
 }
 
-/* Secondary Button */
-button:nth-of-type(2) {
+#saveAndCopy {
+  background: #28a745;
+  color: white;
+}
+#saveAndCopy:hover {
+  background: #218838;
+}
+
+#shareReport {
   background: #6c757d;
   color: white;
 }
+#shareReport:hover {
+  background: #5a6268;
+}
 
-button:nth-of-type(2):hover {
-  background: #495057;
+#previewReport {
+  background: #17a2b8;
+  color: white;
+}
+#previewReport:hover {
+  background: #138496;
+}
+
+/* Dark Mode Toggle (basic style) */
+#toggleDarkMode {
+  background: #444;
+  color: white;
+  margin-bottom: 10px;
+}
+#toggleDarkMode:hover {
+  background: #222;
+}
+
+/* Status Message */
+.status-message {
+  display: none;
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.status-message.success {
+  background-color: #28a745;
+  color: white;
+}
+
+.status-message.error {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Modal for preview */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.modal-content pre {
+  text-align: left;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: #aaa;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Dark Mode */
+.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+.dark-mode .container {
+  background: #1f1f1f;
+  color: #fff;
+}
+
+.dark-mode input,
+.dark-mode select,
+.dark-mode button {
+  background: #333;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+/* Adjust buttons in dark mode if needed */
+.dark-mode #saveToPC {
+  background: #0056b3;
+}
+.dark-mode #saveAndCopy {
+  background: #218838;
+}
+.dark-mode #shareReport {
+  background: #5a6268;
+}
+.dark-mode #previewReport {
+  background: #138496;
+}
+.dark-mode #toggleDarkMode {
+  background: #222;
+}
+
+/* Dark mode for modal preview */
+.dark-mode .modal-content {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-mode .modal-content .close {
+  color: #fff;
+}
+
+.dark-mode .modal-content pre {
+  color: #fff;
+  background-color: transparent;
 }
 
 /* Responsive Design */
@@ -101,6 +234,11 @@ button:nth-of-type(2):hover {
   select,
   button {
     font-size: 14px;
-    padding: 11px;
+    padding: 10px;
+  }
+
+  .modal-content {
+    width: 90%;
+    margin: 30% auto;
   }
 }

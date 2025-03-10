@@ -11,8 +11,18 @@ document.addEventListener("DOMContentLoaded", function () {
   dateField.value = formattedDate;
 });
 
-// Save report event
-document.getElementById("saveReport").addEventListener("click", function () {
+// Button: Save Report to PC
+document.getElementById("saveToPC").addEventListener("click", function () {
+  saveReport(false);
+});
+
+// Button: Save & Copy
+document.getElementById("saveAndCopy").addEventListener("click", function () {
+  saveReport(true);
+});
+
+// Main function to save or copy the report
+function saveReport(copyOnly) {
   const driver = "Valdirlei"; // Fixed name
   const date = document.getElementById("date").value;
   const route = document.getElementById("route").value;
@@ -23,8 +33,6 @@ document.getElementById("saveReport").addEventListener("click", function () {
   const collected = document.getElementById("collected").value;
   const fileType = document.getElementById("fileType").value;
 
-  const statusMessage = document.getElementById("statusMessage");
-
   // Validate input fields
   if (!route || !startTime || !endTime || !miles || !returned || !collected) {
     showMessage("Please fill in all fields before saving.", "error");
@@ -34,7 +42,13 @@ document.getElementById("saveReport").addEventListener("click", function () {
   // Format report content
   const reportContent = `Driver: ${driver}\nDate: ${date}\nRoute: ${route}\nStart: ${startTime}\nEnd: ${endTime}\nMiles: ${miles}\nReturned: ${returned}\nCollected: ${collected}`;
 
-  // Choose the file format
+  // If the user clicked "Save & Copy", we copy the report only
+  if (copyOnly) {
+    copyToClipboard(reportContent);
+    return;
+  }
+
+  // Otherwise, we save the file to the PC
   if (fileType === "txt") {
     saveAsTextFile(reportContent, date);
   } else if (fileType === "csv") {
@@ -49,21 +63,21 @@ document.getElementById("saveReport").addEventListener("click", function () {
       collected
     );
   }
-});
-
-// Function to show success/error messages
-function showMessage(message, type) {
-  const statusMessage = document.getElementById("statusMessage");
-  statusMessage.textContent = message;
-  statusMessage.className = `status-message ${type}`;
-  statusMessage.style.display = "block";
-
-  setTimeout(() => {
-    statusMessage.style.display = "none";
-  }, 3000);
 }
 
-// Function to save the file as TXT
+// Copy to Clipboard
+function copyToClipboard(content) {
+  navigator.clipboard
+    .writeText(content)
+    .then(() => {
+      showMessage("Report copied and ready to paste.", "success");
+    })
+    .catch((err) => {
+      showMessage("Failed to copy report.", "error");
+    });
+}
+
+// Save as TXT
 function saveAsTextFile(content, date) {
   const fileName = `Route_Report_${date.replace(/\//g, "-")}.txt`;
   const blob = new Blob([content], { type: "text/plain" });
@@ -76,7 +90,7 @@ function saveAsTextFile(content, date) {
   showMessage("Report saved successfully!", "success");
 }
 
-// Function to save the file as CSV
+// Save as CSV
 function saveAsCSV(
   date,
   driver,
@@ -102,36 +116,14 @@ function saveAsCSV(
   showMessage("CSV report saved successfully!", "success");
 }
 
-function copyToClipboard(content) {
-  navigator.clipboard
-    .writeText(content)
-    .then(() => {
-      showMessage("Report copied! Open Notes and paste it.", "success");
-    })
-    .catch((err) => {
-      showMessage("Failed to copy report.", "error");
-    });
-}
+// Status Message Helper
+function showMessage(message, type) {
+  const statusMessage = document.getElementById("statusMessage");
+  statusMessage.textContent = message;
+  statusMessage.className = `status-message ${type}`;
+  statusMessage.style.display = "block";
 
-// Alteração na função saveAsTextFile
-function saveAsTextFile(content, date) {
-  copyToClipboard(content); // Copia o conteúdo automaticamente
-}
-
-function shareReport(content) {
-  if (navigator.share) {
-    navigator
-      .share({
-        title: "Route & Miles Daily Log",
-        text: content,
-      })
-      .then(() => {
-        showMessage("Shared successfully!", "success");
-      })
-      .catch(() => {
-        showMessage("Failed to share.", "error");
-      });
-  } else {
-    showMessage("Sharing not supported on this browser.", "error");
-  }
+  setTimeout(() => {
+    statusMessage.style.display = "none";
+  }, 3000);
 }
